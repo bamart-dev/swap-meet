@@ -11,3 +11,6 @@ class Item:
         category = type(self).__name__
 
         return category
+
+    def __str__(self):
+        return f"An object of type {self.get_category()} with id {self.id}."
