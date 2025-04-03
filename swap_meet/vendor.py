@@ -1,20 +1,31 @@
+
+
 class Vendor:
-    # inventory attribute, can be passed in or left as default (default is
-    #   empty list)
-    # add() method - adds an item to inventory list and returns item added
-    # remove() method - remove an item from inventory list if the item is
-    #   present, else return False
+    """
+    Represents a vendor with a list of inventory items
+    """
     def __init__(self,inventory = None):
+        """
+        instatiates Vendor instances; has attribute 'inventory', which
+        initialized as an empty list if no value is passed in.
+        """
         if inventory is None:
             self.inventory = []
         else:
             self.inventory = inventory
 
     def add(self,item):
+        """
+        Adds item to a vendor's inventory list
+        """
         self.inventory.append(item)
         return item
 
     def remove(self,item):
+        """
+        Removes an item from a vendor's inventory list if the item is
+        present and returns the item; otherwise returns False
+        """
         if item in self.inventory:
             self.inventory.remove(item)
             return item
@@ -22,6 +33,10 @@ class Vendor:
             return False
 
     def get_by_id(self, id):
+        """
+        Returns an item by ID number; returns None if no item matches
+        the provided ID number
+        """
         for item in self.inventory:
             if id is item.id:
                 return item
@@ -29,10 +44,11 @@ class Vendor:
         return None
 
     def swap_items(self, other_Vendor, my_item, their_item):
-        # if our item is in our inv AND their item is in their inventory:
-        #  return True
-        # if our tiem is not in our inv OR their item is not in their inv:
-        #  return False
+        """
+        Swaps given item from one vendor's inventory list with an item
+        from another vendor's inventory list and returns True. If
+        either list is missing the given item, method returns False
+        """
         if my_item in self.inventory and their_item in other_Vendor.inventory:
             self.inventory.remove(my_item)
             other_Vendor.inventory.append(my_item)
@@ -45,7 +61,11 @@ class Vendor:
             return False
 
     def swap_first_item(self, other_Vendor):
-        # second way: if not self.inventory or not other_Vendor.inventory:
+        """
+        Swaps the first item in two vendor's inventory lists and
+        returns True; if either inventory list is empty, method returns
+        False
+        """
         if self.inventory == [] or other_Vendor.inventory == []:
             return False
 
@@ -63,6 +83,10 @@ class Vendor:
                 return True
 
     def get_by_category(self, category):
+        """
+        Returns a list of items in the same category; if none match,
+        returns an empty list
+        """
         category_list = []
         for item in self.inventory:
             if item.get_category() == category:
@@ -71,6 +95,10 @@ class Vendor:
         return category_list
 
     def get_best_by_category(self, category):
+        """
+        Returns the best condition item in a vendor's inventory. If no
+        item matches the given category, method returns None
+        """
         best_by_category_list = []
 
         for item in self.inventory:
@@ -91,10 +119,12 @@ class Vendor:
         return best_condition_item
 
     def swap_best_by_category(self, other_vendor, my_priority, their_priority):
-        # my_prio = Electronics
-        # their_prio = Clothing
-        # swap best Clothing from my inventory with the best Electronic from
-        #   their inventory
+        """
+        Swaps the best item in a given category between two vendor's
+        inventories, based on respective priority, and return True. If
+        either inventory does not have an item in that category,
+        method returns False
+        """
         my_best_item = self.get_best_by_category(their_priority)
         their_best_item = other_vendor.get_best_by_category(my_priority)
 
@@ -107,16 +137,3 @@ class Vendor:
         other_vendor.inventory.append(my_best_item)
 
         return True
-
-
-
-
-
-
-
-
-
-
-            # if best_by_category_list:
-            #   compare here
-            # else:
